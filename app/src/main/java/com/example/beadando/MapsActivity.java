@@ -8,17 +8,21 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -46,7 +50,8 @@ import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback{
 
-   static private GoogleMap GMap;
+    private static final int REQUEST_CODE =0;
+    static private GoogleMap GMap;
 
     private static int User_Id = User.ID;
 
@@ -92,7 +97,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     static ListView listView;
-
+    static Button button;
+    static EditText editText;
+    static Button Button_Call;
+    static String Friend_Name;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -118,16 +126,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LocationManager locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
         //example GUI element manipulation
         listView = (ListView) findViewById(R.id.listView);
+        button = (Button) findViewById(R.id.button);
+        editText = (EditText) findViewById(R.id.firend_request_text );
 
-        // a visszajött eredmeény barátok átadásnál tartottam
-
+        Button_Call = (Button) findViewById(R.id.Button_Call_Friend);
         // Create a List from String Array elements
         new Search_Friends(getApplicationContext()).execute(String.valueOf(String.valueOf(User_Id)));
         // Create an ArrayAdapter from List
 
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Not Enough Permission", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -146,8 +154,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // TODO Auto-generated method stub
             }
             @Override
-            public void onStatusChanged(String provider, int status,
-                                        Bundle extras) {
+            public void onStatusChanged(String provider, int status,Bundle extras) {
                 // TODO Auto-generated method stub
             }
         });
@@ -170,7 +177,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 catch (Exception e){
                     e.printStackTrace();
                 }
-                new Location_shared(getApplicationContext(),GMap).execute(String.valueOf((String) listView.getItemAtPosition(i)));
+                Friend_Name = String.valueOf((String) listView.getItemAtPosition(i));
+                new Location_shared(getApplicationContext(),GMap,lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude()).execute(String.valueOf((String) listView.getItemAtPosition(i)));
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                new Friend_request(editText.getText().toString()).execute();
+            }
+        });
+        Button_Call.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view)
+            {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:"+User.PhoneNumber));
+                startActivity(callIntent);
             }
         });
 
@@ -199,17 +224,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         getDeviceLocation();
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
         locationPermissionGranted = false;
-        if (requestCode
-                == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) {// If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+        {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
                 locationPermissionGranted = true;
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
         updateLocationUI();
     }
     private void updateLocationUI() {

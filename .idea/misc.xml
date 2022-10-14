@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/andra/AndroidStudioProjects/beadando/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.12081659973226239" />
+        <entry key="..\:/Users/andra/AndroidStudioProjects/beadando/app/src/main/res/layout-w1240dp/activity_registration_activty.xml" value="0.23560910307898258" />
         <entry key="..\:/Users/andra/AndroidStudioProjects/beadando/app/src/main/res/layout-w936dp/activity_login.xml" value="0.141015625" />
         <entry key="..\:/Users/andra/AndroidStudioProjects/beadando/app/src/main/res/layout/activity_login.xml" value="0.33" />
-        <entry key="..\:/Users/andra/AndroidStudioProjects/beadando/app/src/main/res/layout/activity_maps.xml" value="0.25" />
+        <entry key="..\:/Users/andra/AndroidStudioProjects/beadando/app/src/main/res/layout/activity_maps.xml" value="0.2910244786944696" />
+        <entry key="..\:/Users/andra/AndroidStudioProjects/beadando/app/src/main/res/layout/activity_registration_activty.xml" value="0.25" />
       </map>
     </option>
   </component>

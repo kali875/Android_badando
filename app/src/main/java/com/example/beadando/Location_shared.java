@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.beadando.ui.login.LoginActivity;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -34,12 +35,15 @@ public class Location_shared extends AsyncTask<Object, Integer, String>
     TextView login_check;
     private Context context;
     public String Friend_Name=null;
+    double lat2,long2;
 
     GoogleMap GMap;
-    public Location_shared(Context context,GoogleMap GMap )
+    public Location_shared(Context context,GoogleMap GMap,double lat2, double long2 )
     {
         this.context = context;
         this.GMap = GMap;
+        this.lat2 = lat2;
+        this.long2 = long2;
     }
     @Override
     protected void onProgressUpdate(Integer... progress)
@@ -88,12 +92,11 @@ public class Location_shared extends AsyncTask<Object, Integer, String>
         {
             GMap.clear();
             String[] arrOfStr = result.split("/");
-            LatLng sydney = new LatLng(Double.parseDouble(arrOfStr[0]), Double.parseDouble(arrOfStr[1]));
-            GMap.addMarker(new MarkerOptions().position(sydney).title(Friend_Name));
+            User.PhoneNumber = arrOfStr[2];
+            GMap.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(arrOfStr[0]), Double.parseDouble(arrOfStr[1]))).title(Friend_Name));
             User.select_friend_pos = new LatLng(Double.parseDouble(arrOfStr[0]), Double.parseDouble(arrOfStr[1]));
-            GMap.moveCamera(CameraUpdateFactory.newLatLngZoom(User.select_friend_pos, 2));
+            GMap.animateCamera(CameraUpdateFactory.newLatLngZoom(User.select_friend_pos, 10));
         }
     }
-
 }
 

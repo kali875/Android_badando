@@ -16,43 +16,50 @@
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="114dp"
-        android:layout_height="224dp"
+        android:layout_width="110dp"
+        android:layout_height="600dp"
         android:layout_alignEnd="@id/map"
         android:layout_alignRight="@id/map"
         android:layout_alignBottom="@id/map"
-        android:layout_marginEnd="290dp"
-        android:layout_marginRight="290dp"
-        android:layout_marginBottom="464dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="70dp"
         android:text="Medium Text">
 
     </ListView>
 
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="123dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:rotationX="1"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ListView
-        android:id="@+id/Friends"
-        android:layout_width="124dp"
-        android:layout_height="309dp"
-        android:layout_alignEnd="@id/map"
-        android:layout_alignRight="@id/map"
-        android:layout_alignBottom="@id/map"
-        android:layout_marginEnd="277dp"
-        android:layout_marginRight="277dp"
-        android:layout_marginBottom="9dp" />
-
     <Button
         android:id="@+id/button"
-        android:layout_width="116dp"
-        android:layout_height="68dp"
-        android:text="@string/button" />
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/map"
+        android:layout_alignBottom="@id/map"
+        android:layout_marginLeft="153dp"
+        android:layout_marginEnd="113dp"
+        android:layout_marginRight="140dp"
+        android:layout_marginBottom="671dp"
+        android:text="search"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/firend_request_text"
+        android:layout_width="172dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/Button_Call_Friend"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/map"
+        android:layout_alignBottom="@id/map"
+        android:layout_marginLeft="153dp"
+        android:layout_marginEnd="112dp"
+        android:layout_marginRight="140dp"
+        android:layout_marginBottom="622dp"
+        android:text="Call"
+        android:textSize="12sp" />
 
 </RelativeLayout>

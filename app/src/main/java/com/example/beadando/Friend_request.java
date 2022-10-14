@@ -2,7 +2,7 @@ package com.example.beadando;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpResponse;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient;
@@ -12,17 +12,16 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.cli
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.List;
 
-public class Search_Friends extends AsyncTask<Object, Integer, String>
-{
-    private int byGetOrPost = 0;
+public class Friend_request extends AsyncTask<String, Integer, String> {
     public int querry_check;
-    public boolean login_suc=false;
     private Context context;
-    public Search_Friends(Context context)
+    public String Friend_Name;
+
+    public Friend_request(String Friend_Name)
     {
-        this.context = context;
+        this.Friend_Name = Friend_Name;
+       // this.context = context;
     }
     @Override
     protected void onProgressUpdate(Integer... progress)
@@ -30,11 +29,10 @@ public class Search_Friends extends AsyncTask<Object, Integer, String>
 
     }
     @Override
-    protected String doInBackground(Object[] objects)
-    {
+    protected String doInBackground(String... strings) {
+
         try{
-            String username = (String)objects[0];
-            String link = "http://test.keramia.testhosting.hu/friends.php?search="+username;
+            String link = "http://test.keramia.testhosting.hu/friends_request.php?search="+Friend_Name+"&user="+User.ID;
             //URL url = new URL(link);
             HttpClient client = new DefaultHttpClient();
             HttpGet request = new HttpGet();
@@ -63,17 +61,12 @@ public class Search_Friends extends AsyncTask<Object, Integer, String>
     {
         if(result.equals("0"))
         {
-            login_suc = false;
+            Toast.makeText(context, "The Name is not found", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            String[] arrOfStr = result.split("/");
-            for (String value:arrOfStr)
-            {
-                User.friends.add(value);
-            }
-            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, User.friends);
-            MapsActivity.listView.setAdapter(arrayAdapter);
+            Toast.makeText(context, "Friends request send", Toast.LENGTH_SHORT).show();
         }
     }
 }
+
