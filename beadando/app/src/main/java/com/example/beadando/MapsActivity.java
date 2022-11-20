@@ -208,11 +208,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view)
             {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:"+User.PhoneNumber));
                 if (ActivityCompat.checkSelfPermission(MapsActivity.this,Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
                 {
-                    return;
+                   ActivityCompat.requestPermissions(MapsActivity.this,new String[]{Manifest.permission.CALL_PHONE},2);
+                   return;
                 }
                 startActivity(callIntent);
             }
@@ -221,13 +222,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
     private void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             locationPermissionGranted = true;
         } else {
             ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
     @Override
